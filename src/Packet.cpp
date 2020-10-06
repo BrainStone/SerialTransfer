@@ -176,7 +176,7 @@ uint8_t Packet::available()
 					bytesRead = 0;
 					status    = NEW_DATA;
 
-					callCallbacks();
+					callCallbacks(idByte);
 
 					return bytesToRec;
 				}
@@ -335,13 +335,17 @@ void Packet::unpackPacket()
 	}
 }
 
-void Packet::callCallbacks()
+void Packet::callCallbacks(int index)
 {
 	CallbackNode* cur = callbacks;
 
-	while (cur != nullptr)
-	{
-		cur->callback(*this);
-		cur = cur->next;
-	}
+    // call callback at postition index in the linked list
+    int count = 0;
+    while (cur != nullptr)
+    {
+        if (count == index)
+			cur->callback(*this);
+        count++;
+        cur = cur->next;
+    }
 }

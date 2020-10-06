@@ -243,5 +243,5 @@ class Packet
 
 	uint8_t stuffPacket();
 	void    unpackPacket();
-	void    callCallbacks();
+	void    callCallbacks(int index);
 };
